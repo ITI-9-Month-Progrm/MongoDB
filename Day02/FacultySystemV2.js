@@ -41,26 +41,30 @@ db.Total_Final_Marks.find()
 var cID = db.student.findOne({firstName:"Asmaa"},{"courseIDs":1,_id:0}).courseIDs
 //print(cID)
 db.course.find({_id:{$in:cID}},{courseName:1})
-
 
-//Q4: Implement relation between Student and faculty by adding the faculty object in the student using DBRef.
+
+//Q4: Implement relation between Student and faculty by adding the faculty object in the student using DBRef.
 //add facultyIds into student Collection by using $ref 
 //Select specific student with his name, and then display his faculty
-var fID = db.student.findOne({firstName:"Asmaa"}).FacultyID
-//print(fID)
+var fID = db.student.findOne({firstName:"Asmaa"}).FacultyID
+//print(fID)
 db[fID.$ref].find({_id:fID.$id},{"name":1})
-
-
-//Q5: Display each student Full Name along with his average grade in all courses
-db.student.aggregate(
-[
- {$project:{
-       //used concat to display student fullName 
-       FullName:{$concat: [ "$firstName", "  ", "$lastName" ]},_id:0,courseArr:1
-     }}
-]
+
+
+//Q5: Display each student Full Name along with his average grade in all courses
+db.student.aggregate(
+[
+ {$project:{
+       //used concat to display student fullName 
+       FullName:{$concat: [ "$firstName", "  ", "$lastName" ]},_id:0,courseArr:1
+     }}
+]
 )
      
+//Bouns
+    
+ db.faculty.insert({_id:10,name:"Commerce",address:"Giza"})    
+ db.faculty.find()    
     
 
 
