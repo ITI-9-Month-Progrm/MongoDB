@@ -52,14 +52,15 @@ db[fID.$ref].find({_id:fID.$id},{"name":1})
 
 
 //Q5: Display each student Full Name along with his average grade in all courses
-db.student.aggregate(
-[
- {$project:{
-       //used concat to display student fullName 
-       FullName:{$concat: [ "$firstName", "  ", "$lastName" ]},_id:0,courseArr:1
-     }}
-]
-)
+db.student.aggregate([
+
+{$unwind:"$Grade"},
+
+{$project:{FullName:{$concat:["$FirstName"," ","$LastName"]},_id:0,Grade:1}},
+
+{$group:{_id:"$FullName","AvgOfMarks":{$avg:"$Grade.Grade"}}}
+
+])
      
     
 
